@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #aa3bff;
+  --color-primary-hover: #9b2cee;
+  --color-background-dark: #16171d;
+  --color-surface-dark: #1f2028;
+  --color-border-dark: #2e303a;
+}
+
+@layer base {
+  body {
+    @apply bg-background-dark text-gray-200 antialiased h-screen overflow-hidden;
+  }
+}
+
+.glass-panel {
+  @apply bg-surface-dark/80 backdrop-blur-md border border-border-dark shadow-xl rounded-xl;
+}
