@@ -1,10 +1,12 @@
 import asyncio
 import logging
-from agi.session_manager import SessionManager
+
 from agi.flow_engine import FlowEngine
+from agi.session_manager import SessionManager
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
+
 
 class AsyncAGIChannel:
     def __init__(self, reader, writer):
@@ -17,19 +19,19 @@ class AsyncAGIChannel:
             line = await self.reader.readline()
             if not line:
                 break
-            line = line.decode('utf-8').strip()
+            line = line.decode("utf-8").strip()
             if not line:
                 break
-            if ':' in line:
-                key, value = line.split(':', 1)
+            if ":" in line:
+                key, value = line.split(":", 1)
                 self.env[key.strip()] = value.strip()
 
     async def send_command(self, command: str) -> str:
         logger.debug(f"AGI TX: {command}")
-        self.writer.write(f"{command}\n".encode('utf-8'))
+        self.writer.write(f"{command}\n".encode())
         await self.writer.drain()
         response = await self.reader.readline()
-        response_str = response.decode('utf-8').strip()
+        response_str = response.decode("utf-8").strip()
         logger.debug(f"AGI RX: {response_str}")
         return response_str
 
@@ -38,6 +40,7 @@ class AsyncAGIChannel:
 
     async def hangup(self):
         return await self.send_command("HANGUP")
+
 
 class AGIServer:
     def __init__(self, host: str, port: int):
@@ -48,7 +51,7 @@ class AGIServer:
     async def handle_client(self, reader, writer):
         channel = AsyncAGIChannel(reader, writer)
         await channel.read_env()
-        
+
         engine = FlowEngine(channel, self.session_manager)
         try:
             await engine.execute()

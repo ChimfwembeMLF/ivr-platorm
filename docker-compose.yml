@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ivr_platform
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - ivr_net
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    networks:
+      - ivr_net
+
+  asterisk:
+    image: andrius/asterisk:alpine
+    ports:
+      - "5060:5060/udp"
+      - "10000-10099:10000-10099/udp"
+    volumes:
+      - ./asterisk/etc/asterisk:/etc/asterisk
+      - astsounds:/var/lib/asterisk/sounds/custom
+    networks:
+      - ivr_net
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+      - "4573:4573"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@postgres:5432/ivr_platform
+      - AGI_HOST=0.0.0.0
+      - AUDIO_UPLOAD_DIR=/app/storage/audio
+    volumes:
+      - ./backend:/app
+      # Map the backend audio uploads directly to Asterisk's sounds directory
+      - astsounds:/app/storage/audio
+    networks:
+      - ivr_net
+    depends_on:
+      - postgres
+      - redis
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - ivr_net
+
+volumes:
+  pgdata:
+  redisdata:
+  astsounds:
+
+networks:
+  ivr_net:
+    driver: bridge

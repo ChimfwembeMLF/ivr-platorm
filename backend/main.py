@@ -1,16 +1,19 @@
 import asyncio
 import logging
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
-from contextlib import asynccontextmanager
-from core.config import settings
+
 from agi.server import AGIServer
-from api.routes import flows, calls, tenants
+from api.routes import audio, calls, flows, tenants
+from core.config import settings
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 agi_server_task = None
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -19,9 +22,9 @@ async def lifespan(app: FastAPI):
     global agi_server_task
     server = AGIServer(host=settings.AGI_HOST, port=settings.AGI_PORT)
     agi_server_task = asyncio.create_task(server.start())
-    
+
     yield
-    
+
     # Shutdown
     logger.info("Shutting down IVR Platform Backend...")
     if agi_server_task:
@@ -31,10 +34,8 @@ async def lifespan(app: FastAPI):
         except asyncio.CancelledError:
             pass
 
-app = FastAPI(
-    title=settings.PROJECT_NAME,
-    lifespan=lifespan
-)
+
+app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -47,6 +48,8 @@ app.add_middleware(
 app.include_router(tenants.router, prefix="/api/v1")
 app.include_router(flows.router, prefix="/api/v1")
 app.include_router(calls.router, prefix="/api/v1")
+app.include_router(audio.router, prefix="/api/v1")
+
 
 @app.websocket("/ws/calls")
 async def calls_websocket(websocket: WebSocket):
@@ -58,6 +61,7 @@ async def calls_websocket(websocket: WebSocket):
             await websocket.send_text(f"Message text was: {data}")
     except WebSocketDisconnect:
         logger.info("Client disconnected from call tracking websocket")
+
 
 @app.get("/health")
 async def health_check():

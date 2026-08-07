@@ -84,10 +84,10 @@ description: "Task list template for feature implementation"
 
 ### Implementation for User Story 3
 
-- [ ] T018 [P] [US3] Create `FlowBuilder` component using ReactFlow in `frontend/src/components/FlowBuilder/FlowBuilder.tsx`
-- [ ] T019 [US3] Create Flow Node palettes (Play Audio, DTMF, Hangup) in `frontend/src/components/FlowBuilder/StepPalette.tsx`
-- [ ] T020 [US3] Create properties sidebar for node configuration in `frontend/src/components/FlowBuilder/StepProperties.tsx`
-- [ ] T021 [US3] Integrate flow saving via REST API in frontend `services/api.ts`
+- [x] T018 [P] [US3] Create `FlowBuilder` component using ReactFlow in `frontend/src/components/FlowBuilder/FlowBuilder.tsx`
+- [x] T019 [US3] Create Flow Node palettes (Play Audio, DTMF, Hangup) in `frontend/src/components/FlowBuilder/StepPalette.tsx`
+- [x] T020 [US3] Create properties sidebar for node configuration in `frontend/src/components/FlowBuilder/StepProperties.tsx`
+- [x] T021 [US3] Integrate flow saving via REST API in frontend `services/api.ts`
 
 **Checkpoint**: Flow builder successfully generates and saves JSON schema to the database.
 
@@ -101,10 +101,10 @@ description: "Task list template for feature implementation"
 
 ### Implementation for User Story 4
 
-- [ ] T022 [P] [US4] Implement Audio API routes for uploads in `backend/api/routes/audio.py`
-- [ ] T023 [US4] Implement `AudioService` fallback logic in `backend/services/audio_service.py`
-- [ ] T024 [US4] Integrate audio resolution into `play_audio` step in `backend/agi/flow_engine.py`
-- [ ] T025 [P] [US4] Create Audio Manager UI in `frontend/src/components/AudioManager/`
+- [x] T022 [P] [US4] Implement Audio API routes for uploads in `backend/api/routes/audio.py`
+- [x] T023 [US4] Implement `AudioService` fallback logic in `backend/services/audio_service.py`
+- [x] T024 [US4] Integrate audio resolution into `play_audio` step in `backend/agi/flow_engine.py`
+- [x] T025 [P] [US4] Create Audio Manager UI in `frontend/src/components/AudioManager/`
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -114,7 +114,7 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T026 [P] Expand unit tests for `backend/agi/flow_engine.py`
-- [ ] T027 Code cleanup and refactoring
-- [ ] T028 Update quickstart documentation
-- [ ] T029 Configure Docker-compose network links securely
+- [x] T026 [P] Expand unit tests for `backend/agi/flow_engine.py`
+- [x] T027 Code cleanup and refactoring
+- [x] T028 Update quickstart documentation
+- [x] T029 Configure Docker-compose network links securely

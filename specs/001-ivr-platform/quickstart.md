@@ -9,22 +9,6 @@
 
 1. **Start Infrastructure (Postgres, Redis, Asterisk)**
    ```bash
-   docker-compose up -d
-   ```
-
-2. **Start Backend (FastAPI & FastAGI)**
-   ```bash
-   cd backend
-   pip install -r requirements.txt
-   uvicorn main:app --reload --port 8000
-   ```
-   *(Note: The FastAGI server runs concurrently via the FastAPI lifespan hook on port 4573)*
-
-3. **Start Frontend (React Builder)**
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
    ```
 
 ## Validation Scenarios

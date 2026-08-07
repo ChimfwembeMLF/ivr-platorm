@@ -1,8 +1,10 @@
 import redis.asyncio as redis
+
 from core.config import settings
 
 # Global redis pool
 redis_client = redis.from_url(settings.REDIS_URL, decode_responses=True)
+
 
 async def get_redis():
     return redis_client
