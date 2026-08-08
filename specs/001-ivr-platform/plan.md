@@ -8,6 +8,10 @@
 
 Build a production-ready multi-tenant IVR platform with a React-based visual flow builder, a FastAPI REST/WebSocket backend, and an Asterisk FastAGI execution engine. The platform relies on Redis for real-time state management to ensure stateless AGI handlers and high scalability.
 
+**Additions**: 
+- **Database Fix**: Alembic migrations must be fully initialized and executed within the Docker container to ensure tables like `audio_assets` are created, fixing 500 API errors.
+- **UI Overhaul**: The ReactFlow builder interface must be upgraded from basic styling to a premium, state-of-the-art aesthetic featuring glassmorphism, dynamic micro-animations, neon accents, and custom visual ReactFlow nodes for IVR steps.
+
 ## Technical Context
 
 **Language/Version**: Python 3.11+ (Backend), TypeScript/React (Frontend)

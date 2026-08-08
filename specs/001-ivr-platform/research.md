@@ -19,3 +19,13 @@
 ### Asterisk Integration
 - **Decision**: Use `asterisk-agi` (Python) and build a custom `asyncio` TCP server (FastAGI).
 - **Rationale**: Allows non-blocking execution of concurrent calls within a single Python process, aligning with the asynchronous constitution principle.
+
+### Initial Database Migration
+- **Decision**: Manually run `alembic revision --autogenerate` and `alembic upgrade head` in the Docker container for the first time.
+- **Rationale**: The FastAPI application's `lifespan` doesn't automatically create tables if an Alembic workflow is expected but no initial migration exists. The `audio_assets` table was missing, causing 500 errors.
+- **Alternatives considered**: Using `Base.metadata.create_all` in `lifespan`, but Alembic is already configured in the Dockerfile, so generating the initial migration is the standard approach.
+
+### Premium UI Redesign
+- **Decision**: Overhaul the ReactFlow builder with Tailwind CSS glassmorphism, Google Fonts (Inter), and custom ReactFlow Nodes.
+- **Rationale**: The user indicated the UI was "too basic". A premium aesthetic with dark mode gradients, micro-animations, and modern visual block nodes significantly enhances the perceived value of the application.
+- **Alternatives considered**: Generic Material UI (too rigid, less visually stunning out-of-the-box compared to tailored Tailwind).

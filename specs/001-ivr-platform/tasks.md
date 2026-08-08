@@ -118,3 +118,26 @@ description: "Task list template for feature implementation"
 - [x] T027 Code cleanup and refactoring
 - [x] T028 Update quickstart documentation
 - [x] T029 Configure Docker-compose network links securely
+
+---
+
+## Phase 7: Initial Database Migration
+
+**Purpose**: Generate and apply the initial Alembic migration to fix missing tables (e.g. `audio_assets`) which cause 500 errors.
+
+- [x] T030 Execute `alembic revision --autogenerate -m "Initial"` inside the backend container.
+- [x] T031 Execute `alembic upgrade head` inside the backend container to create all tables.
+
+---
+
+## Phase 8: Premium UI Overhaul
+
+**Purpose**: Upgrade the ReactFlow builder from a basic layout to a stunning, premium aesthetic (glassmorphism, Inter font, custom nodes).
+
+- [x] T032 [P] Update `frontend/index.html` to include the Inter font from Google Fonts.
+- [x] T033 [P] Overhaul `frontend/src/index.css` with Tailwind custom properties for neon primary colors, dark backgrounds, and `.glass-panel` utilities.
+- [x] T034 Create custom node components in `frontend/src/components/FlowNodes/CustomNodes.tsx` (e.g., `PlayAudioNode`, `GatherInputNode`) with premium styling.
+- [x] T035 Integrate `CustomNodes.tsx` into `frontend/src/components/FlowBuilder/FlowBuilder.tsx` and redesign the header navigation.
+- [x] T036 Redesign `frontend/src/components/FlowBuilder/StepPalette.tsx` to a sleek drag-and-drop dock with hover animations.
+- [x] T037 Redesign `frontend/src/components/AudioManager/AudioManager.tsx` with a modern dashed-border upload zone and glassmorphism overlay.
+- [x] T038 Verify the visual fidelity of the updated frontend.
